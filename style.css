@@ -1,0 +1,26 @@
+#logo {
+    height: 30px;
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    text-align: center;
+    color: white;
+    /* Ajusta el color del texto según tu diseño */
+}
+/*carrusel tamaño*/
+.sizeCarousel{
+ height: 300px;
+}
+/*imagenes del carusel tamaño*/
+.sizeImgC{
+ height: 100%;
+ object-fit: cover;
+ filter: brightness(0.5) blur(1px);
+}
+/* body{
+    border: solid blue 3px;
+} */
