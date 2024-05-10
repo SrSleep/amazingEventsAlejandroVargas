@@ -28,4 +28,9 @@
     height: 45vh;
     object-fit: cover;
 }
+.imgCard{
+    height: 30vh;
+    object-fit: cover;
+}
+
 
