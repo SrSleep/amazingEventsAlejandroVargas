@@ -32,5 +32,9 @@
     height: 30vh;
     object-fit: cover;
 }
-
-
+.suavizar{
+    background-color: #031633;
+}
+.table .suavizar {
+    background-color: #031633;
+}

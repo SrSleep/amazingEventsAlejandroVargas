@@ -218,16 +218,17 @@ function crearDetalles(ubicacionDiv, detalles) {
         <img src="${detalles.image}" class="img-thumbnail img-fluid detailsImg" alt="">
     </div>
     <div class="col-5 bg-light">
-    <h2 class=" display-4 d-md-none d-lg-block fs-1 text-center">${detalles.name}</h2>
-    <h2 class=" display-4 d-none d-md-block d-lg-none fs-2 text-center">${detalles.name}</h2>
+    <h2 class=" display-4 d-md-none d-lg-block fs-1 text-center tituloDetalles"><i><b>${detalles.name}</b></i></h2>
+    <h2 class=" display-4 d-none d-md-block d-lg-none fs-2 text-center" tituloDetalles><b>${detalles.name}</b></h2>
         <p class="fs-5">${detalles.description}</p>
-        <p class="fs-5">Date: ${detalles.date}</p>
-        <p class="fs-5">Category: ${detalles.category}</p>
-        <p class="fs-5">Location: ${detalles.place}</p>
-        <p class="fs-5">Capacity: ${detalles.capacity}</p>
-        <p class="fs-5">Price: ${detalles.price}</p>
-        <p class="fs-5">${detalles.estimate?"Estimate: "+detalles.estimate :"Assistance: "+detalles.assistance}</p>
+        <p class="fs-5"><strong>Date: </strong> ${detalles.date}</p>
+        <p class="fs-5"><strong>Category: </strong> ${detalles.category}</p>
+        <p class="fs-5"><strong>Location: </strong> ${detalles.place}</p>
+        <p class="fs-5"><strong>Capacity: </strong> ${detalles.capacity}</p>
+        <p class="fs-5"><strong>Price: </strong> ${detalles.price}</p>
+        <p class="fs-5">${detalles.estimate?"<strong>Estimate: </strong> "+detalles.estimate :"<strong>Assistance: </strong> "+detalles.assistance}</p>
     </div>`
+    
     
     ubicacionDiv.appendChild(nuevoDetalle)
 

@@ -13,7 +13,7 @@
 
 <body class="d-flex flex-column bg-dark-subtle min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-md bg-dark">
+        <nav class="navbar navbar-expand-md suavizar">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img class="logo" src="/images/amazing_brand.png" alt="logo of Amazing Events">
@@ -85,42 +85,18 @@
         </div>
         <div class="container-fluid  mt-3">
             <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
-                <div class="row align-items-center">
+                <div class="row align-items-center" id="contendorCheckbox">
                     <div class="col">
                         <input class="form-check-input" type="checkbox" value="" id="option1">
                         <label class="form-check-label" for="option1">
                             Option 1
                         </label>
                     </div>
-                    <div class="col">
-                        <input class="form-check-input" type="checkbox" value="" id="option2">
-                        <label class="form-check-label" for="option2">
-                            Option 2
-                        </label>
-                    </div>
-                    <div class="col">
-                        <input class="form-check-input" type="checkbox" value="" id="option3">
-                        <label class="form-check-label" for="option3">
-                            Option 3
-                        </label>
-                    </div>
-                    <div class="col">
-                        <input class="form-check-input" type="checkbox" value="" id="option4">
-                        <label class="form-check-label" for="option4">
-                            Option 4
-                        </label>
-                    </div>
-                    <div class="col">
-                        <input class="form-check-input" type="checkbox" value="" id="option5">
-                        <label class="form-check-label" for="option5">
-                            Option 5
-                        </label>
-                    </div>
                 </div>
                 <div>
                     <div>
                         <form class="d-flex " role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control me-2" type="search" placeholder="Search"  id="buscar" aria-label="Search">
                             <button class="btn btn-outline-dark btn-sm" type="submit">Search</button>
                         </form>
                     </div>
@@ -131,7 +107,7 @@
             <!-- aqui se imprimen las cartas con dom -->
         </div>
     </main>
-    <footer class="bg-dark mt-auto">
+    <footer class="suavizar mt-auto">
         <div class="container-fluid d-flex justify-content-between">
             <div class="d-flex justify-content-around align-items-center ">
                 <div class="me-2">
