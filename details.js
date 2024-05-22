@@ -194,119 +194,41 @@ const data = {
         },
     ],
 };
-// ubicacion del padre Div donde se van pintar las cartas
-let cartasDiv = document.getElementById(`contenedorCartas`);
-let checkboxDiv = document.getElementById(`contendorCheckbox`);
-let inputBuscar = document.getElementById(`buscar`)
 
-pintarChecks(checkboxDiv, data.events);
-pintarCartas(cartasDiv, data.events);
+let url = new URL(document.location).searchParams;
+let idUrl = url.get("id");
+let detallesDiv = document.getElementById(`contenedorDetalles`)
 
-inputBuscar.addEventListener(`input`, (evento) => {
-    let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
-    let arrayChecks = filtradoChecks(changeCategory)
-    if (inputBuscar.value != 0) {
-        arrayChecks = filtradoBuscar(inputBuscar.value, arrayChecks)
-    }
+pintarDetalles(detallesDiv, data.events)
 
-    
-    pintarCartas(cartasDiv, arrayChecks)
-
-});
-
-
-checkboxDiv.addEventListener('change', (evento) => {
-    let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
-    let arrayChecks = filtradoChecks(changeCategory)
-    if (inputBuscar.value != 0) {
-        arrayChecks = filtradoBuscar(inputBuscar.value, arrayChecks)
-    }
-    
-    pintarCartas(cartasDiv, arrayChecks)
-
-
-});
-
-function pintarChecks(ubicacionDiv, checkbox) {
-    let arrayCategory = [];
-    checkbox.forEach(evento => {
-        if (!arrayCategory.includes(evento.category)) {
-            arrayCategory.push(evento.category);
+function pintarDetalles(ubicacionDiv, detalles) {
+    ubicacionDiv.innerHTML = ``;
+    for (let i = 0; i < detalles.length; i++) {
+        if (detalles[i]._id == idUrl) {
+            crearDetalles(ubicacionDiv, detalles[i])
         }
-    });
-
-    ubicacionDiv.innerHTML = '';
-    for (let i = 0; i < arrayCategory.length; i++) {
-        crearCheckbox(ubicacionDiv, arrayCategory[i])
     }
 }
 
-function crearCheckbox(ubicacionDiv, checkbox,) {
-    let checkboxUbicacion = document.createElement(`div`);
-    checkboxUbicacion.classList.add(`col`, `d-flex`, `align-items-center`,);
-
-    checkboxUbicacion.innerHTML = `
-    <input class="form-check-input" type="checkbox" value="${checkbox}" id="${checkbox}">
-    <label class="form-check-label text-nowrap ms-2" for="${checkbox}">
-        ${checkbox}
-    </label>`;
-
-    ubicacionDiv.appendChild(checkboxUbicacion);
-
-};
-
-function pintarCartas(ubicacionDiv, lasCartas) {
-    ubicacionDiv.innerHTML = ``
-    if (lasCartas != 0) {
-        for (let i = 0; i < lasCartas.length; i++) {
-            crearCarta(ubicacionDiv, lasCartas[i]);
-        }
-    }else{
-        ubicacionDiv.innerHTML = `<p>No results found</p>`
-    }
-    
-    console.log(lasCartas.length);
-};
-
-function crearCarta(ubicacionDiv, laCarta) {
-    let nuevaCarta = document.createElement(`div`);
-    nuevaCarta.classList.add(`card`, `mb-4`,);
-    nuevaCarta.style.width = `18rem`;
-    nuevaCarta.innerHTML = `
-    <img src="${laCarta.image}" class="card-img-top imgCard" alt="...">
-    <div class="card-body text-center">
-        <h5 class="card-title">${laCarta.name}</h5>
-        <p class="card-text">${laCarta.description}.</p>
+function crearDetalles(ubicacionDiv, detalles) {
+    let nuevoDetalle = document.createElement(`div`)
+    nuevoDetalle.classList.add(`row`, `justify-content-around`, `p-3`)
+    nuevoDetalle.innerHTML = `
+    <div class="col-5 bg-light p-2">
+        <img src="${detalles.image}" class="img-thumbnail img-fluid detailsImg" alt="">
     </div>
-    <div class="card-body d-flex justify-content-around align-items-center">
-        <p class="m-0 card-text"> Price ${laCarta.price} $</p>
-        <a href="/details.html?id=${laCarta._id}" class="btn btn-outline-dark bg-danger-subtle btn-sm">Details</a>
-    </div>`;
+    <div class="col-5 bg-light">
+    <h2 class=" display-4 d-md-none d-lg-block fs-1 text-center">${detalles.name}</h2>
+    <h2 class=" display-4 d-none d-md-block d-lg-none fs-2 text-center">${detalles.name}</h2>
+        <p class="fs-5">${detalles.description}</p>
+        <p class="fs-5">Date: ${detalles.date}</p>
+        <p class="fs-5">Category: ${detalles.category}</p>
+        <p class="fs-5">Location: ${detalles.place}</p>
+        <p class="fs-5">Capacity: ${detalles.capacity}</p>
+        <p class="fs-5">Price: ${detalles.price}</p>
+        <p class="fs-5">${detalles.estimate?"Estimate: "+detalles.estimate :"Assistance: "+detalles.assistance}</p>
+    </div>`
+    
+    ubicacionDiv.appendChild(nuevoDetalle)
 
-    ubicacionDiv.appendChild(nuevaCarta);
-
-};
-
-function filtradoBuscar(texto, eventos) {
-    let arrayBuscando = eventos.filter(busca =>
-        busca.name.toLocaleLowerCase().includes(texto.toLocaleLowerCase()) ||
-        busca.description.toLocaleLowerCase().includes(texto.toLocaleLowerCase())
-    );
-    return arrayBuscando;
-}
-
-function filtradoChecks(eventos) {
-    let checkArray = data.events.filter(check => {
-        for (let i = 0; i < eventos.length; i++) {
-            if (eventos[i].id == check.category) {
-                return check;
-            }
-        };
-    });
-
-    if (checkArray.length != 0) {
-        return checkArray
-    } else {
-        return data.events
-    }
 }

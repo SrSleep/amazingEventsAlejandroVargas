@@ -196,23 +196,36 @@ const data = {
 };
 // ubicacion del padre Div donde se van pintar las cartas
 let cartasDiv = document.getElementById(`contenedorCartas`);
+let checkboxDiv = document.getElementById(`contendorCheckbox`);
+let inputBuscar = document.getElementById(`buscar`);
 
+pintarChecks(checkboxDiv);
+pintarCartas(cartasDiv, data.events);
 
+inputBuscar.addEventListener('input', (evento) => {
+    let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
+    let arrayChecks = filtradoChecks(changeCategory);
 
-pintarCartas(cartasDiv, data.events)
-
-function pintarCartas(ubicacionDiv, lasCartas) {
-    for (let i = 0; i < lasCartas.length; i++) {
-        if (data.currentDate < lasCartas[i].date) {
-            crearCarta(ubicacionDiv, lasCartas[i]);
-        }
+    if (inputBuscar.value != 0) {
+        arrayChecks = filtradoBuscar(inputBuscar.value, arrayChecks);
     }
-};
+    pintarCartas(cartasDiv, arrayChecks);
+});
+checkboxDiv.addEventListener('change', (evento) => {
+    let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
+    let arrayChecks = filtradoChecks(changeCategory);
+
+    if (inputBuscar.value != 0) {
+        arrayChecks = filtradoBuscar(inputBuscar.value, arrayChecks);
+    }
+
+    pintarCartas(cartasDiv, arrayChecks);
+});
 
 function crearCarta(ubicacionDiv, laCarta) {
-    let nuevaCarta = document.createElement(`div`);
-    nuevaCarta.classList.add(`card`, `mb-4`,);
-    nuevaCarta.style.width = `18rem`;
+    let nuevaCarta = document.createElement('div');
+    nuevaCarta.classList.add('card', 'mb-4');
+    nuevaCarta.style.width = '18rem';
     nuevaCarta.innerHTML = `
     <img src="${laCarta.image}" class="card-img-top imgCard" alt="...">
     <div class="card-body text-center">
@@ -221,9 +234,87 @@ function crearCarta(ubicacionDiv, laCarta) {
     </div>
     <div class="card-body d-flex justify-content-around align-items-center">
         <p class="m-0 card-text"> Price ${laCarta.price} $</p>
-        <a href="/details.html" class="btn btn-outline-dark bg-danger-subtle btn-sm">Details</a>
+        <a href="/details.html?id=${laCarta._id}" class="btn btn-outline-dark bg-danger-subtle btn-sm">Details</a>
     </div>`;
 
     ubicacionDiv.appendChild(nuevaCarta);
 
-};
+}
+
+function pintarChecks(ubicacionDiv) {
+    let arrayfechas = [];
+    for (const evento of data.events) {
+        if (data.currentDate < evento.date) {
+            arrayfechas.push(evento);
+        }
+    }
+
+    let arrayCategory = [];
+    arrayfechas.forEach(evento => {
+        if (!arrayCategory.includes(evento.category)) {
+            arrayCategory.push(evento.category);
+        }
+    })
+
+    ubicacionDiv.innerHTML = '';
+    for (let i = 0; i < arrayCategory.length; i++) {
+        crearCheckbox(ubicacionDiv, arrayCategory[i])
+    }
+}
+
+function crearCheckbox(ubicacionDiv, checkbox) {
+    let checkboxUbicacion = document.createElement('div');
+    checkboxUbicacion.classList.add('col', 'd-flex', 'align-items-center');
+
+    checkboxUbicacion.innerHTML = `
+    <input class="form-check-input" type="checkbox" value="${checkbox}" id="${checkbox}">
+    <label class="form-check-label text-nowrap ms-2" for="${checkbox}">
+        ${checkbox}
+    </label>`;
+
+    ubicacionDiv.appendChild(checkboxUbicacion);
+
+}
+
+function pintarCartas(ubicacionDiv, lasCartas) {
+    ubicacionDiv.innerHTML = '';
+
+    if (lasCartas.length !== 0) {
+        for (let i = 0; i < lasCartas.length; i++) {
+            if (data.currentDate < lasCartas[i].date) {
+                crearCarta(ubicacionDiv, lasCartas[i]);
+            }
+        }
+    } else {
+        ubicacionDiv.innerHTML = '<p>No results found</p>';
+    }
+}
+
+function filtradoBuscar(texto, eventos) {
+    let arrayBuscando = eventos.filter(date => data.currentDate < date.date);
+
+    arrayBuscando = eventos.filter(busca =>
+        busca.name.toLowerCase().includes(texto.toLowerCase()) ||
+        busca.description.toLowerCase().includes(texto.toLowerCase())
+    );
+    return arrayBuscando;
+}
+
+function filtradoChecks(eventos) {
+    let checkArray = data.events.filter(date => data.currentDate < date.date)
+
+    checkArray = checkArray.filter(check => {
+
+        for (let i = 0; i < eventos.length; i++) {
+            if (eventos[i].id === check.category) {
+                return check;
+            }
+        }
+    });
+
+    if (checkArray.length !== 0) {
+        return checkArray
+    } else {
+        return data.events
+    }
+}
