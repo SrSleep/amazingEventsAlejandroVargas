@@ -80,3 +80,36 @@ export function filtradoChecks(eventos, arrayEvento) {
         return arrayEvento
     }
 }
+
+function crearDetalles(ubicacionDiv, detalles) {
+    let nuevoDetalle = document.createElement(`div`)
+    nuevoDetalle.classList.add(`row`, `justify-content-around`, `p-3`)
+    nuevoDetalle.innerHTML = `
+    <div class="col-5 bg-light p-2">
+        <img src="${detalles.image}" class="img-thumbnail img-fluid detailsImg" alt="">
+    </div>
+    <div class="col-5 bg-light">
+    <h2 class=" display-4 d-md-none d-lg-block fs-1 text-center tituloDetalles"><i><b>${detalles.name}</b></i></h2>
+    <h2 class=" display-4 d-none d-md-block d-lg-none fs-2 text-center" tituloDetalles><b>${detalles.name}</b></h2>
+        <p class="fs-5">${detalles.description}</p>
+        <p class="fs-5"><strong>Date: </strong> ${detalles.date}</p>
+        <p class="fs-5"><strong>Category: </strong> ${detalles.category}</p>
+        <p class="fs-5"><strong>Location: </strong> ${detalles.place}</p>
+        <p class="fs-5"><strong>Capacity: </strong> ${detalles.capacity}</p>
+        <p class="fs-5"><strong>Price: </strong> ${detalles.price}</p>
+        <p class="fs-5">${detalles.estimate?"<strong>Estimate: </strong> "+detalles.estimate :"<strong>Assistance: </strong> "+detalles.assistance}</p>
+    </div>`
+    
+    
+    ubicacionDiv.appendChild(nuevoDetalle)
+
+}
+
+export function pintarDetalles(ubicacionDiv, detalles, idUrl) {
+    ubicacionDiv.innerHTML = ``;
+    for (let i = 0; i < detalles.length; i++) {
+        if (detalles[i]._id == idUrl) {
+            crearDetalles(ubicacionDiv, detalles[i])
+        }
+    }
+}

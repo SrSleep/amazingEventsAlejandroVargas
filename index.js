@@ -205,7 +205,7 @@ functionsGlobal.pintarCartas(cartasDiv, data.events);
 
 inputBuscar.addEventListener('input', (evento) => {
     let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
-    let arrayChecks = functionsGlobal.filtradoChecks(changeCategory)
+    let arrayChecks = functionsGlobal.filtradoChecks(changeCategory,data.events)
     if (inputBuscar.value != 0) {
         arrayChecks = functionsGlobal.filtradoBuscar(inputBuscar.value, arrayChecks)
     }
