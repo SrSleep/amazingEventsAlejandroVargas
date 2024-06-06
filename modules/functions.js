@@ -1,5 +1,5 @@
 
-function crearCarta(ubicacionDiv, laCarta) {
+export function crearCarta(ubicacionDiv, laCarta) {
     let nuevaCarta = document.createElement('div');
     nuevaCarta.classList.add('card', 'mb-4');
     nuevaCarta.style.width = '18rem';
@@ -21,9 +21,9 @@ function crearCarta(ubicacionDiv, laCarta) {
 export function pintarCartas(ubicacionDiv, lasCartas) {
     ubicacionDiv.innerHTML = ''
     if (lasCartas != 0) {
-        for (let i = 0; i < lasCartas.length; i++) {
-            crearCarta(ubicacionDiv, lasCartas[i]);
-        }
+        lasCartas.forEach(element => {
+            crearCarta(ubicacionDiv, element);
+        });
     }else{
         ubicacionDiv.innerHTML = '<p>No results found</p>'
     }
@@ -112,4 +112,7 @@ export function pintarDetalles(ubicacionDiv, detalles, idUrl) {
             crearDetalles(ubicacionDiv, detalles[i])
         }
     }
+}
+export function filterupComingEvents(array, dateCurrent) {
+    return array.filter(date => dateCurrent < date.date);
 }
