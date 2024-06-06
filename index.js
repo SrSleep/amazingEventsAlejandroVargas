@@ -1,3 +1,4 @@
+import * as functionsGlobal from "./modules/functions.js";
 const data = {
     currentDate: "2023-01-01",
     events: [
@@ -199,114 +200,31 @@ let cartasDiv = document.getElementById('contenedorCartas');
 let checkboxDiv = document.getElementById('contendorCheckbox');
 let inputBuscar = document.getElementById('buscar')
 
-pintarChecks(checkboxDiv, data.events);
-pintarCartas(cartasDiv, data.events);
+functionsGlobal.pintarChecks(checkboxDiv, data.events);
+functionsGlobal.pintarCartas(cartasDiv, data.events);
 
 inputBuscar.addEventListener('input', (evento) => {
     let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
-    let arrayChecks = filtradoChecks(changeCategory)
+    let arrayChecks = functionsGlobal.filtradoChecks(changeCategory)
     if (inputBuscar.value != 0) {
-        arrayChecks = filtradoBuscar(inputBuscar.value, arrayChecks)
+        arrayChecks = functionsGlobal.filtradoBuscar(inputBuscar.value, arrayChecks)
     }
 
     
-    pintarCartas(cartasDiv, arrayChecks)
+    functionsGlobal.pintarCartas(cartasDiv, arrayChecks)
 
 });
 
 
 checkboxDiv.addEventListener('change', (evento) => {
     let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
-    let arrayChecks = filtradoChecks(changeCategory)
+    let arrayChecks = functionsGlobal.filtradoChecks(changeCategory, data.events)
     if (inputBuscar.value != 0) {
-        arrayChecks = filtradoBuscar(inputBuscar.value, arrayChecks)
+        arrayChecks = functionsGlobal.filtradoBuscar(inputBuscar.value, arrayChecks)
     }
     
-    pintarCartas(cartasDiv, arrayChecks)
+    functionsGlobal.pintarCartas(cartasDiv, arrayChecks)
 
 
 });
 
-function pintarChecks(ubicacionDiv, checkbox) {
-    let arrayCategory = [];
-    checkbox.forEach(evento => {
-        if (!arrayCategory.includes(evento.category)) {
-            arrayCategory.push(evento.category);
-        }
-    });
-
-    ubicacionDiv.innerHTML = '';
-    for (let i = 0; i < arrayCategory.length; i++) {
-        crearCheckbox(ubicacionDiv, arrayCategory[i])
-    }
-}
-
-function crearCheckbox(ubicacionDiv, checkbox,) {
-    let checkboxUbicacion = document.createElement('div');
-    checkboxUbicacion.classList.add('col', 'd-flex', 'align-items-center');
-
-    checkboxUbicacion.innerHTML = `
-    <input class="form-check-input" type="checkbox" value="${checkbox}" id="${checkbox}">
-    <label class="form-check-label text-nowrap ms-2" for="${checkbox}">
-        ${checkbox}
-    </label>`;
-
-    ubicacionDiv.appendChild(checkboxUbicacion);
-
-};
-
-function pintarCartas(ubicacionDiv, lasCartas) {
-    ubicacionDiv.innerHTML = ''
-    if (lasCartas != 0) {
-        for (let i = 0; i < lasCartas.length; i++) {
-            crearCarta(ubicacionDiv, lasCartas[i]);
-        }
-    }else{
-        ubicacionDiv.innerHTML = '<p>No results found</p>'
-    }
-    
-    console.log(lasCartas.length);
-};
-
-function crearCarta(ubicacionDiv, laCarta) {
-    let nuevaCarta = document.createElement('div');
-    nuevaCarta.classList.add('card', 'mb-4');
-    nuevaCarta.style.width = '18rem';
-    nuevaCarta.innerHTML = `
-    <img src="${laCarta.image}" class="card-img-top imgCard" alt="...">
-    <div class="card-body text-center ">
-        <h5 class="card-title">${laCarta.name}</h5>
-        <p class="card-text">${laCarta.description}.</p>
-    </div>
-    <div class="card-body d-flex justify-content-around align-items-center ">
-        <p class="m-0 card-text"> Price ${laCarta.price} $</p>
-        <a href="/details.html?id=${laCarta._id}" class="btn btn-outline-dark btn-sm">Details</a>
-    </div>`;
-
-    ubicacionDiv.appendChild(nuevaCarta);
-
-};
-
-function filtradoBuscar(texto, eventos) {
-    let arrayBuscando = eventos.filter(busca =>
-        busca.name.toLocaleLowerCase().includes(texto.toLocaleLowerCase()) ||
-        busca.description.toLocaleLowerCase().includes(texto.toLocaleLowerCase())
-    );
-    return arrayBuscando;
-}
-
-function filtradoChecks(eventos) {
-    let checkArray = data.events.filter(check => {
-        for (let i = 0; i < eventos.length; i++) {
-            if (eventos[i].id === check.category) {
-                return check;
-            }
-        };
-    });
-
-    if (checkArray.length != 0) {
-        return checkArray
-    } else {
-        return data.events
-    }
-}
