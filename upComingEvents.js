@@ -205,7 +205,7 @@ functionsGlobal.pintarCartas(cartasDiv, functionsGlobal.filterupComingEvents(dat
 
 inputBuscar.addEventListener('input', (evento) => {
     let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
-    let arrayChecks = functionsGlobal.filtradoChecks(changeCategory,functionsGlobal.filterupComingEvents(data.events,data.currentDate));
+    let arrayChecks = functionsGlobal.filtradoChecks(changeCategory,data.events);
 
     if (inputBuscar.value !== 0) {
         arrayChecks = functionsGlobal.filtradoBuscar(inputBuscar.value, arrayChecks);
@@ -215,7 +215,7 @@ inputBuscar.addEventListener('input', (evento) => {
 
 checkboxDiv.addEventListener('change', (evento) => {
     let changeCategory = document.querySelectorAll("input[type=checkbox]:checked");
-    let arrayChecks = functionsGlobal.filtradoChecks(changeCategory,functionsGlobal.filterupComingEvents(data.events,data.currentDate));
+    let arrayChecks = functionsGlobal.filtradoChecks(changeCategory,data.events);
 
     if (inputBuscar.value !== 0) {
         arrayChecks = functionsGlobal.filtradoBuscar(inputBuscar.value, arrayChecks);

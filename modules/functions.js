@@ -113,6 +113,11 @@ export function pintarDetalles(ubicacionDiv, detalles, idUrl) {
         }
     }
 }
+
 export function filterupComingEvents(array, dateCurrent) {
     return array.filter(date => dateCurrent < date.date);
+}
+
+export function filterPastEvents(array, dateCurrent) {
+    return array.filter(date => dateCurrent > date.date);
 }
