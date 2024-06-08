@@ -32,31 +32,3 @@ functionsGlobal.appendCell(eventNumbersTr, eventLowAssis.percentage + "%");
 functionsGlobal.appendCell(eventNumbersTr, eventHighCapacity.capacity.toLocaleString('es-CO'));
 
 })
-
-
-
-
-
-
-
-
-
-
-
-// let upComingEventsCategory = []
-// upComingEvents.forEach(evento => {
-//     let categoryIndex = upComingEventsCategory.findIndex(cat => cat.name === evento.category)
-
-//     if (categoryIndex === -1) {
-//         upComingEventsCategory.push({
-//             name: evento.category,
-//             revenues: evento.estimate * evento.price,
-//             capacity: evento.capacity,
-//             estimate: evento.estimate,
-//         })
-//     } else {
-//         upComingEventsCategory[categoryIndex].revenues += evento.estimate * evento.price
-//         upComingEventsCategory[categoryIndex].capacity += evento.capacity
-//         upComingEventsCategory[categoryIndex].capacity += evento.estimate
-//     }
-// });
