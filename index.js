@@ -17,10 +17,9 @@ fetch(urlApiEvents)
             if (inputBuscar.value != 0) {
                 arrayChecks = functionsGlobal.filtradoBuscar(inputBuscar.value, arrayChecks)
             }
-        
-        
+
             functionsGlobal.pintarCartas(cartasDiv, arrayChecks)
-        
+
         });
 
         checkboxDiv.addEventListener('change', (evento) => {
@@ -29,16 +28,11 @@ fetch(urlApiEvents)
             if (inputBuscar.value != 0) {
                 arrayChecks = functionsGlobal.filtradoBuscar(inputBuscar.value, arrayChecks)
             }
-        
+
             functionsGlobal.pintarCartas(cartasDiv, arrayChecks)
-        
-        
+
         });
         
-
-
-
-
     })
 
 

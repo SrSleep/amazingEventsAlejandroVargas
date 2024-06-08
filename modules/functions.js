@@ -24,7 +24,7 @@ export function pintarCartas(ubicacionDiv, lasCartas) {
         lasCartas.forEach(element => {
             crearCarta(ubicacionDiv, element);
         });
-    }else{
+    } else {
         ubicacionDiv.innerHTML = '<p>No results found</p>'
     }
 }
@@ -97,10 +97,10 @@ function crearDetalles(ubicacionDiv, detalles) {
         <p class="fs-5"><strong>Location: </strong> ${detalles.place}</p>
         <p class="fs-5"><strong>Capacity: </strong> ${detalles.capacity}</p>
         <p class="fs-5"><strong>Price: </strong> ${detalles.price}</p>
-        <p class="fs-5">${detalles.estimate?"<strong>Estimate: </strong> "+detalles.estimate :"<strong>Assistance: </strong> "+detalles.assistance}</p>
+        <p class="fs-5">${detalles.estimate ? "<strong>Estimate: </strong> " + detalles.estimate : "<strong>Assistance: </strong> " + detalles.assistance}</p>
     </div>`
-    
-    
+
+
     ubicacionDiv.appendChild(nuevoDetalle)
 
 }
@@ -120,4 +120,94 @@ export function filterupComingEvents(array, dateCurrent) {
 
 export function filterPastEvents(array, dateCurrent) {
     return array.filter(date => dateCurrent > date.date);
+}
+
+export function highestAssistance(array, date) {
+    array = filterPastEvents(array, date)
+    let highAssistancePercentage = 0;
+    let nameHighAssistanceEvent = '';
+    array.forEach(element => {
+        if ((element.assistance / element.capacity) * 100 > highAssistancePercentage) {
+            highAssistancePercentage = parseInt((element.assistance / element.capacity) * 100)
+            nameHighAssistanceEvent = element.name
+        }
+    });
+    return {
+        name: nameHighAssistanceEvent,
+        percentage: highAssistancePercentage
+    };
+}
+
+export function lowestAssistance(array, date) {
+    array = filterPastEvents(array, date)
+    let lowestAssistancePercentage = 100;
+    let namelowestAssistanceEvent = '';
+    array.forEach(element => {
+        if ((element.assistance / element.capacity) * 100 < lowestAssistancePercentage) {
+            lowestAssistancePercentage = parseInt((element.assistance / element.capacity) * 100)
+            namelowestAssistanceEvent = element.name
+        }
+    });
+    return {
+        name: namelowestAssistanceEvent,
+        percentage: lowestAssistancePercentage
+    };
+}
+
+export function highCapacity(array) {
+    let highCapacity = 0;
+    let nameHighCapacityEvent = '';
+    array.forEach(element => {
+        if (element.capacity > highCapacity) {
+            highCapacity = element.capacity
+            nameHighCapacityEvent = element.name
+
+        }
+
+    });
+    return {
+        name: nameHighCapacityEvent,
+        capacity: highCapacity
+    };
+}
+
+export function appendCell(ubicacion, contenido) {
+    let celda = document.createElement('td');
+    celda.innerHTML = contenido;
+    ubicacion.appendChild(celda);
+}
+
+export function statisticsEvents(array) {
+    let upComingEventsCategory = []
+    array.forEach(evento => {
+        let categoryIndex = upComingEventsCategory.findIndex(cat => cat.name === evento.category)
+
+        if (categoryIndex === -1) {
+            upComingEventsCategory.push({
+                name: evento.category,
+                revenues: (evento.assistance ? evento.assistance : evento.estimate) * evento.price,
+                capacity: evento.capacity,
+                estimate: evento.estimate ? evento.estimate : evento.assistance,
+            })
+        } else {
+            upComingEventsCategory[categoryIndex].revenues += evento.assistance ? evento.assistance : evento.estimate * evento.price
+            upComingEventsCategory[categoryIndex].capacity += evento.capacity
+            upComingEventsCategory[categoryIndex].estimate += evento.estimate ? evento.estimate : evento.assistance
+        }
+      
+    });
+
+    return upComingEventsCategory
+}
+export function pintarceldasStatistics(arrayStatistic, ubicacion) {
+    ubicacion.innerHTML = ''
+    arrayStatistic.forEach(element => {
+        let celda = document.createElement('tr')
+        celda.classList.add('text-center')
+        celda.innerHTML = `
+        <td>${element.name}</td>
+        <td>${element.revenues.toLocaleString('es-CO')}</td>
+        <td>${parseInt((element.estimate / element.capacity) * 100)}%</td>`
+        ubicacion.appendChild(celda)
+    });
 }
