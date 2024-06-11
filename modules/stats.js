@@ -1,10 +1,10 @@
-import * as functionsGlobal from "./modules/functions.js"
+import * as functionsGlobal from "./functions.js"
 let urlApiEvents = "https://aulamindhub.github.io/amazing-api/events.json"
 
 fetch(urlApiEvents)
 .then(response =>response.json())
 .then(data =>{
-
+ 
 
 let eventHighAssis = functionsGlobal.highestAssistance(data.events, data.currentDate);
 let eventLowAssis = functionsGlobal.lowestAssistance(data.events, data.currentDate);

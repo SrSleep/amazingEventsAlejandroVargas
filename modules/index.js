@@ -1,4 +1,4 @@
-import * as functionsGlobal from "./modules/functions.js";
+import * as functionsGlobal from "./functions.js";
 
 let urlApiEvents = "https://aulamindhub.github.io/amazing-api/events.json"
 // ubicacion del padre Div donde se van pintar las cartas

@@ -1,4 +1,4 @@
-import * as functionsGlobal from "./modules/functions.js";
+import * as functionsGlobal from "./functions.js";
 
 let urlApiEvents = "https://aulamindhub.github.io/amazing-api/events.json"
 let url = new URL(document.location).searchParams;
@@ -9,7 +9,3 @@ fetch(urlApiEvents)
     .then(data => {
         functionsGlobal.pintarDetalles(detallesDiv, data.events, idUrl)
     })
-
-
-
-

@@ -1,5 +1,5 @@
 
-export function crearCarta(ubicacionDiv, laCarta) {
+function crearCarta(ubicacionDiv, laCarta) {
     let nuevaCarta = document.createElement('div');
     nuevaCarta.classList.add('card', 'mb-4');
     nuevaCarta.style.width = '18rem';
@@ -11,7 +11,7 @@ export function crearCarta(ubicacionDiv, laCarta) {
     </div>
     <div class="card-body d-flex justify-content-around align-items-center ">
         <p class="m-0 card-text"> Price ${laCarta.price} $</p>
-        <a href="/details.html?id=${laCarta._id}" class="btn btn-outline-dark btn-sm">Details</a>
+        <a href="/pages/details.html?id=${laCarta._id}" class="btn btn-outline-dark btn-sm">Details</a>
     </div>`;
 
     ubicacionDiv.appendChild(nuevaCarta);
@@ -128,13 +128,13 @@ export function highestAssistance(array, date) {
     let nameHighAssistanceEvent = '';
     array.forEach(element => {
         if ((element.assistance / element.capacity) * 100 > highAssistancePercentage) {
-            highAssistancePercentage = parseInt((element.assistance / element.capacity) * 100)
+            highAssistancePercentage = (element.assistance / element.capacity) * 100
             nameHighAssistanceEvent = element.name
         }
     });
     return {
         name: nameHighAssistanceEvent,
-        percentage: highAssistancePercentage
+        percentage: parseFloat(highAssistancePercentage).toFixed(1)
     };
 }
 
@@ -144,13 +144,13 @@ export function lowestAssistance(array, date) {
     let namelowestAssistanceEvent = '';
     array.forEach(element => {
         if ((element.assistance / element.capacity) * 100 < lowestAssistancePercentage) {
-            lowestAssistancePercentage = parseInt((element.assistance / element.capacity) * 100)
+            lowestAssistancePercentage = (element.assistance / element.capacity) * 100
             namelowestAssistanceEvent = element.name
         }
     });
     return {
         name: namelowestAssistanceEvent,
-        percentage: lowestAssistancePercentage
+        percentage: parseFloat(lowestAssistancePercentage).toFixed(1)
     };
 }
 
@@ -199,15 +199,17 @@ export function statisticsEvents(array) {
 
     return upComingEventsCategory
 }
+
 export function pintarceldasStatistics(arrayStatistic, ubicacion) {
     ubicacion.innerHTML = ''
     arrayStatistic.forEach(element => {
+        let percentage = parseFloat((element.estimate / element.capacity) * 100);
         let celda = document.createElement('tr')
         celda.classList.add('text-center')
         celda.innerHTML = `
         <td>${element.name}</td>
         <td>${element.revenues.toLocaleString('es-CO')}</td>
-        <td>${parseInt((element.estimate / element.capacity) * 100)}%</td>`
+        <td>${percentage === 100 ? '100%' : percentage.toFixed(1) + '%'}</td>`
         ubicacion.appendChild(celda)
     });
 }
