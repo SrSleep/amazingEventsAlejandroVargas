@@ -34,12 +34,3 @@ fetch(urlApiEvents)
         });
         
     })
-
-
-
-
-
-
-
-
-

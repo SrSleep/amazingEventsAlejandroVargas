@@ -190,7 +190,7 @@ export function statisticsEvents(array) {
                 estimate: evento.estimate ? evento.estimate : evento.assistance,
             })
         } else {
-            upComingEventsCategory[categoryIndex].revenues += evento.assistance ? evento.assistance : evento.estimate * evento.price
+            upComingEventsCategory[categoryIndex].revenues += (evento.assistance ? evento.assistance : evento.estimate) * evento.price
             upComingEventsCategory[categoryIndex].capacity += evento.capacity
             upComingEventsCategory[categoryIndex].estimate += evento.estimate ? evento.estimate : evento.assistance
         }
